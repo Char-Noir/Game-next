@@ -20,11 +20,11 @@ export default withSession(async (req, res) => {
     }
     let email = result.rows[0][1];
     let login = result.rows[0][0];
+    client.end();
     let user = { isLoggedIn: true, login, email };
     req.session.set("user", user);
     await req.session.save();
     res.json(user);
-    client.end();
   } catch (error) {
     console.log(error);
     const { response: fetchResponse } = error;
